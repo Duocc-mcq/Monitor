@@ -1,6 +1,6 @@
 pipeline {
   environment {
-    registry = "hub.cxview.ai/people-gateway:0.1-base"
+    registry = "hub.iview.vn/heatmapservice_goview_staging"
     registryCredential = 'dockerhub'
     dockerImage = ''
   }
@@ -15,7 +15,7 @@ pipeline {
       steps{
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
-          docker.withRegistry( 'https://hub.cxview.vn', registryCredential ) {
+          docker.withRegistry( 'https://hub.iview.vn', registryCredential ) {
           dockerImage.push() 
           dockerImage.push('latest') 
           }
