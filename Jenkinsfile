@@ -2,7 +2,6 @@ pipeline {
   environment {
     registry = "hub.iview.vn/heatmapservice_goview_staging"
     registryCredential = 'dockerhub'
-    dockerImage = ''
   }
   agent any
   stages {
@@ -16,8 +15,8 @@ pipeline {
         script {
           dockerImage = docker.build registry + ":$BUILD_NUMBER"
           docker.withRegistry( 'https://hub.iview.vn', registryCredential ) {
-          dockerImage.push() 
-          dockerImage.push('latest') 
+            dockerImage.push() 
+            dockerImage.push('latest') 
           }
         }
       }
