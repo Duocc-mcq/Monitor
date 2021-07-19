@@ -25,10 +25,10 @@ pipeline {
     stage('Deploy Image') {
       steps{
         script {
-          sh "docker run -itd --net=host --name people-gateway \
-                --shm-size=10.05gb \
-                -v /tmp/logs:/people-counting-heatmap-service/logs \
-                hub.iview.vn/people-gateway:2.2.0"
+          sh "docker run --gpus all -itd --net=host --name people-gateway-base \
+  		--shm-size=10.05gb \
+  		-v /mnt/sda2/ExternalHardrive/edge-ai/people-counting-heatmap-service:/people-counting-heatmap-service \
+  		hub.cxview.ai/people-gateway:0.1-base"
         }
       }
     }
