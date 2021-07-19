@@ -25,7 +25,7 @@ pipeline {
     stage('Deploy Image') {
       steps{
         script {
-          def image_people = registry_people + ":$BUILD_NUBER"
+          def image_people = registry + ":$BUILD_NUBER"
           sh "ansible-playbook  playbook.yaml --extra-vars \"image_people=${image_people} \""
         }
       }
