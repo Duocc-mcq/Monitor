@@ -25,8 +25,10 @@ pipeline {
     stage('Deploy Image') {
       steps{
         script {
-          image = registry + ":$BUILD_NUMBER"
-          sh "ansible-playbook  playbook.yaml --extra-vars \"image=${image} \""
+          sh "docker run -itd --net=host --name people-gateway \
+                --shm-size=10.05gb \
+                -v /tmp/logs:/people-counting-heatmap-service/logs \
+                hub.iview.vn/people-gateway:2.2.0"
         }
       }
     }
