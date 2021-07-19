@@ -14,8 +14,8 @@ pipeline {
     stage('Building image') {
       steps{
         script {
-          dockerImage = docker.build registry + ":$BUILD_NUMBER"
           docker.withRegistry( 'https://hub.cxview.ai', registryCredential ) {
+            dockerImage = docker.build registry + ":$BUILD_NUMBER"
             dockerImage.push() 
             dockerImage.push('latest') 
           }
