@@ -1,7 +1,0 @@
-.*/
-__pycache__/
-data_logs/
-
-*.avi
-*.md
-Dockerfile*
