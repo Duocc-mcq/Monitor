@@ -11,7 +11,7 @@ pipeline {
         script {
           def Git_Tag = "${params.Git_Tag}"
           def Git_Branch = "${params.Git_Branch}"
-          git 'https://github.com/Duocc-mcq/Monitor.git' --extra-var Git_Tag=${Git_Tag} --extra-var Git_Branch=${Git_Branch}
+          git 'https://github.com/Duocc-mcq/Monitor.git --extra-var Git_Tag=${Git_Tag} --extra-var Git_Branch=${Git_Branch}'
         }
       }
     }
