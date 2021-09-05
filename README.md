@@ -29,7 +29,7 @@ Gateway service nhận dữ liệu counting dưới box thực hiện tích lũy
 docker run -itd --net=host --name people-gateway \
   --shm-size=10.05gb \
   -v /tmp/logs:/people-counting-heatmap-service/logs \
-  hub.iview.vn/people-gateway:2.2.0
+  hub.iview.vn/people-gateway:2.2.2
 ```
 
 ## Development
@@ -45,14 +45,15 @@ docker run --gpus all -itd --net=host --name people-gateway-base \
 docker build -t hub.iview.vn/people-gateway:x.y.z -f Dockerfile .
 ```
 
-## Latest Changelogs - 2.2.0
+## Latest Changelogs - 2.2.2
+BoxVersion = 2.2.1
 
 ### Added
 
-- nvanalytics functions
 ### Changed
 
-- All data payload
+- Ignore centroid not in roi of heatmap
+- Remove shape config
 ### Fixed
 
 
