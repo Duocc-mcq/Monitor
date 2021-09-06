@@ -5,30 +5,25 @@ pipeline {
     dockerImage = '' 
   }
   agent any
+  parameters {
+    gitParameter(
+      branch: '',
+      branchFilter: ".*",
+      defaultValue: "",
+      description: '',
+      listSize: '10',
+      name: 'Version',
+      quickFilterEnabled: false,
+      selectedValue: 'NONE',
+      sortMode: 'ASCENDING_SMART',
+      tagFilter: "*",
+      type: 'PT_BRANCH_TAG',
+      useRepository: 'https://github.com/Duocc-mcq/Monitor.git')
+  }
   stages {
-    stage('Cloning Git') {
+    stage('echo Git Tag') {
       steps {
-        script {
-          def Git_Tag = "${params.Git_Tag}"
-          def Git_Branch = "${params.Git_Branch}"
-          git 'https://github.com/Duocc-mcq/Monitor.git --extra-var Git_Tag=${Git_Tag} --extra-var Git_Branch=${Git_Branch}'
-        }
-      }
-    }
-    stage('pass env') {
-      steps {
-        script {
-          dir("${env.WORKSPACE}"){
-            sh 'echo "TAG=$BUILD_NUMBER" > .env && scp .env jenkins@192.168.30.127:/home/jenkins/people-counting-heatmap-service'
-          }
-        }
-      }
-    }        
-    stage('SSH serve_deploy') {
-      steps {
-        sshagent(['ssh-remote']) {
-          sh 'ssh -o StrictHostKeyChecking=no -l jenkins 192.168.30.127 "cd /home/jenkins/people-counting-heatmap-service && docker-compose up -d"'
-        }
+        echo "${params.Version}"
       }
     }            
   }
