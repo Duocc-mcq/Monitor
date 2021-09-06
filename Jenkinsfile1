@@ -5,11 +5,24 @@ pipeline {
     dockerImage = '' 
   }
   agent any
-  properties([gitLabConnection(gitLabConnection: '', jobCredentialId: ''), parameters([gitParameter(branch: '', branchFilter: '.*', defaultValue: 'v1.0.0', name: 'tag', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'PT_TAG'), gitParameter(branch: '', branchFilter: '.*', defaultValue: 'main', name: 'branch', quickFilterEnabled: false, selectedValue: 'NONE', sortMode: 'NONE', tagFilter: '*', type: 'PT_TAG')])])
+  parameters {
+    gitParameter(
+      branch: '',
+      branchFilter: ".*",
+      defaultValue: "",
+      description: '',
+      listSize: '10',
+      name: 'Version',
+      quickFilterEnabled: false,
+      selectedValue: 'NONE',
+      sortMode: 'ASCENDING_SMART',
+      tagFilter: "*",
+      type: 'PT_BRANCH_TAG',
+      useRepository: 'https://github.com/Duocc-mcq/Monitor.git')
   stages {
-    stage('Cloning Git') {
+    stage('echo Git Tag') {
       steps {
-        git branch: "${params.branch}" , git tag:"${params.tag}" , url:'https://github.com/Duocc-mcq/Monitor.git'
+        echo "${params.Version}"
       }
     }
     stage('pass env') {
