@@ -25,22 +25,6 @@ pipeline {
       steps {
         echo "${params.Version}"
       }
-    }
-    stage('pass env') {
-      steps {
-        script {
-          dir("${env.WORKSPACE}"){
-            sh 'echo "TAG=$BUILD_NUMBER" > .env && scp .env jenkins@192.168.30.127:/home/jenkins/people-counting-heatmap-service'
-          }
-        }
-      }
-    }        
-    stage('SSH serve_deploy') {
-      steps {
-        sshagent(['ssh-remote']) {
-          sh 'ssh -o StrictHostKeyChecking=no -l jenkins 192.168.30.127 "cd /home/jenkins/people-counting-heatmap-service && docker-compose up -d"'
-        }
-      }
     }            
   }
   post {
