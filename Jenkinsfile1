@@ -19,6 +19,7 @@ pipeline {
       tagFilter: "*",
       type: 'PT_BRANCH_TAG',
       useRepository: 'https://github.com/Duocc-mcq/Monitor.git')
+  }
   stages {
     stage('echo Git Tag') {
       steps {
