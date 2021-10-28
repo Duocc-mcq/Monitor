@@ -1,15 +1,15 @@
 pipeline {
-  environment {
+  environment {   
     registryCredential = 'dockerhub'
     registryCredential = 'env-vault'
     dockerImage = ''
   }
   agent any
-  parameters {
+  stages {
     stage('SSH serve_deploy') {
       steps {
         sshagent(['ssh-remote']) {
-          sh 'ssh -o StrictHostKeyChecking=no -l root 192.168.30.121 "cd /home/tng/search-engine/ && env-vault prod.env docker-compose -- up -d"'
+          sh 'ssh -o StrictHostKeyChecking=no -l root 192.168.30.121 "cd /home/tng/search-engine && env-vault prod.env docker-compose -- up -d"'
         }
       }
     }        
