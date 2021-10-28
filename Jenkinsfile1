@@ -1,38 +1,25 @@
 pipeline {
   environment {
-    registry = "hub.cxview.ai/people-gateway-lab"
     registryCredential = 'dockerhub'
-    dockerImage = '' 
+    registryCredential = 'env-vault'
+    dockerImage = ''
   }
   agent any
   parameters {
-    gitParameter(
-      branch: '',
-      branchFilter: ".*",
-      defaultValue: "",
-      description: '',
-      listSize: '10',
-      name: 'Version',
-      quickFilterEnabled: false,
-      selectedValue: 'NONE',
-      sortMode: 'ASCENDING_SMART',
-      tagFilter: "*",
-      type: 'PT_BRANCH_TAG',
-      useRepository: 'https://github.com/Duocc-mcq/Monitor.git')
-  }
-  stages {
-    stage('echo Git Tag') {
+    stage('SSH serve_deploy') {
       steps {
-        echo "${params.Version}"
+        sshagent(['ssh-remote']) {
+          sh 'ssh -o StrictHostKeyChecking=no -l root 192.168.30.121 "cd /home/tng/search-engine/ && env-vault prod.env docker-compose -- up -d"'
+        }
       }
-    }            
+    }        
   }
   post {
     success {
-      sh "curl -s -X POST https://api.telegram.org/bot1779154197:AAH7evUsAgpF8TsXcuWuoHODkWttOovpseg/sendMessage -d chat_id=-549042452 -d text=build_people_counting_done"
+      sh "curl -s -X POST https://api.telegram.org/bot1779154197:AAH7evUsAgpF8TsXcuWuoHODkWttOovpseg/sendMessage -d chat_id=-549042452 -d text=build_search_vess_done"
     }
     failure {
-      sh "curl -s -X POST https://api.telegram.org/bot1779154197:AAH7evUsAgpF8TsXcuWuoHODkWttOovpseg/sendMessage -d chat_id=-549042452 -d text=build_peopele_counting_failure"
+      sh "curl -s -X POST https://api.telegram.org/bot1779154197:AAH7evUsAgpF8TsXcuWuoHODkWttOovpseg/sendMessage -d chat_id=-549042452 -d text=build_search_vess_failure"
     }
   }
 }
